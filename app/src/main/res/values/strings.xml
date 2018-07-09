@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Kalendar</string>
+    <string name="hair_time">Волосатое время</string>
+    <string name="xml_read_error">Не удается открыть базу данных городов</string>
+</resources>
