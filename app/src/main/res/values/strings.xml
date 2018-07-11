@@ -6,4 +6,7 @@
     <string name="enter_your_name">Введите Ваше имя</string>
     <string name="next">Далее</string>
     <string name="enter_user_name_and_city">Введите имя пользователя и город</string>
+    <string name="confirm_your_city">Подтвердите свой город</string>
+    <string name="yes_button">Да</string>
+    <string name="no_button">Нет</string>
 </resources>
