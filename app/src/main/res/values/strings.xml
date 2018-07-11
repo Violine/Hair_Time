@@ -2,4 +2,8 @@
     <string name="app_name">Kalendar</string>
     <string name="hair_time">Волосатое время</string>
     <string name="xml_read_error">Не удается открыть базу данных городов</string>
+    <string name="enter_city_name">Введите название города</string>
+    <string name="enter_your_name">Введите Ваше имя</string>
+    <string name="next">Далее</string>
+    <string name="enter_user_name_and_city">Введите имя пользователя и город</string>
 </resources>

@@ -8,4 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CustomAutocomteStyle" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:background">#ffff</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">#ffff</item>
+    </style>
+
+    <style name="CustomEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:background">#ffff</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">#ffff</item>
+    </style>
+    <style name="CustomButtonStyle" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">#ff0004</item>
+    </style>
+
 </resources>
