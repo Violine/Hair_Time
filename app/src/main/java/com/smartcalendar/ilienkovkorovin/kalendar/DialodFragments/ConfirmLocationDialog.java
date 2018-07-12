@@ -34,7 +34,7 @@ public class ConfirmLocationDialog extends DialogFragment {
 
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString()
-                    + " must implement NoticeDialogListener");
+                    + " must implement1 NoticeDialogListener");
         }
     }
 
