@@ -20,7 +20,7 @@
         <item name="colorControlActivated">#ffff</item>
     </style>
     <style name="CustomButtonStyle" parent="ThemeOverlay.AppCompat">
-        <item name="colorAccent">#ff0004</item>
+        <item name="colorAccent">#180cf7</item>
     </style>
 
 </resources>

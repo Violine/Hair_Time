@@ -2,6 +2,7 @@ package com.smartcalendar.ilienkovkorovin.kalendar.DialodFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,8 +15,28 @@ import com.smartcalendar.ilienkovkorovin.kalendar.R;
 import com.smartcalendar.ilienkovkorovin.kalendar.StartActivity;
 
 public class ConfirmLocationDialog extends DialogFragment {
-    TextView cityNameTextView;
-    String cityName;
+    private TextView cityNameTextView;
+    private String cityName;
+    private ConfirmLocationDialogListener confirmLocationDialogListener;
+
+
+    public interface ConfirmLocationDialogListener {
+        void onDialogPositiveButtonClick(DialogFragment dialog);
+
+        void onDialogNegativeButtonClick(DialogFragment dialog);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            confirmLocationDialogListener = (ConfirmLocationDialogListener) getActivity();
+
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement NoticeDialogListener");
+        }
+    }
 
     @NonNull
     @Override
@@ -31,7 +52,7 @@ public class ConfirmLocationDialog extends DialogFragment {
                 .setPositiveButton(R.string.yes_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-// сэттим город в поле
+                        confirmLocationDialogListener.onDialogPositiveButtonClick(ConfirmLocationDialog.this);
                     }
                 }).setNegativeButton(R.string.no_button, new DialogInterface.OnClickListener() {
             @Override

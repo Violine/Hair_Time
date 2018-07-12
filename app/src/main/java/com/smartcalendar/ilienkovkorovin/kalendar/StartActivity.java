@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -29,7 +30,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StartActivity extends AppCompatActivity {
+public class StartActivity extends AppCompatActivity implements LocationListener, ConfirmLocationDialog.ConfirmLocationDialogListener {
 
     private Toolbar toolbar;
     private ArrayList<String> allCity;
@@ -58,7 +59,7 @@ public class StartActivity extends AppCompatActivity {
         String cityNameSetting = userData.getString(USER_CITY, null);   // получаем название города если он сохранён, или null если нет
         if (cityNameSetting == null) {    // если null:
             startLocation();              // - определяем местоположение
-            showConfirmCityDialog();      // - показываем диалог с подтверждением
+            //  showConfirmCityDialog();      // - показываем диалог с подтверждением
             initUI();                     // - показываем активность
         } else {
             startCalendarActivity();      // иначе - настройки сохранены - пропускаем это окно
@@ -80,9 +81,9 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.hair_time);
-        setSupportActionBar(toolbar);
+//        toolbar = findViewById(R.id.toolbar);
+//        toolbar.setTitle(R.string.hair_time);
+//        setSupportActionBar(toolbar);
 
         enterCityTextView = findViewById(R.id.autoCompleteTextView);
         nextButton = findViewById(R.id.confirmCityAndNameButton);
@@ -126,6 +127,7 @@ public class StartActivity extends AppCompatActivity {
             if (checkPermission()) {
                 if (isNetworkEnabled) {
                     if (locationManager != null) {
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 1000, this);
                         currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         if (currentLocation != null) {
                             userLocation = getApplicationState(currentLocation);
@@ -193,6 +195,36 @@ public class StartActivity extends AppCompatActivity {
         if (persmissionsGranted) {
             recreate();
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        showConfirmCityDialog();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    @Override
+    public void onDialogPositiveButtonClick(DialogFragment dialog) {
+        enterCityTextView.setText(userLocation);
+    }
+
+    @Override
+    public void onDialogNegativeButtonClick(DialogFragment dialog) {
+
     }
 }
 
