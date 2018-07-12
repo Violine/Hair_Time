@@ -2,6 +2,7 @@ package com.smartcalendar.ilienkovkorovin.kalendar;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -52,11 +53,16 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_start);
-        startLocation();
-        if (!userLocation.equals("")) showConfirmCityDialog();
-        initUI();
+        userData = getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);    // пробуем считать настройки
+        String cityNameSetting = userData.getString(USER_CITY, null);   // получаем название города если он сохранён, или null если нет
+        if (cityNameSetting == null) {    // если null:
+            startLocation();              // - определяем местоположение
+            showConfirmCityDialog();      // - показываем диалог с подтверждением
+            initUI();                     // - показываем активность
+        } else {
+            startCalendarActivity();      // иначе - настройки сохранены - пропускаем это окно
+        }
     }
 
     private void showConfirmCityDialog() {
@@ -65,6 +71,12 @@ public class StartActivity extends AppCompatActivity {
         DialogFragment confirmCityDialog = new ConfirmLocationDialog();
         confirmCityDialog.setArguments(cityName);
         confirmCityDialog.show(getSupportFragmentManager(), "confirmCityDialog");
+    }
+
+    private void startCalendarActivity() {
+        Intent intent = new Intent(this, CalendarActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     private void initUI() {
@@ -91,6 +103,7 @@ public class StartActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), R.string.enter_user_name_and_city, Toast.LENGTH_SHORT).show();
                 } else {
                     saveUserData(userName, userCity);
+                    startCalendarActivity();
                 }
             }
         });
@@ -144,10 +157,7 @@ public class StartActivity extends AppCompatActivity {
         }
         if (addressList.isEmpty()) return "LOCATION NOT FOUND";
         Address currentAddress = addressList.get(0);
-
-
-        currentLocality = currentAddress.getFeatureName();
-
+        currentLocality = currentAddress.getLocality();
         return currentLocality;
     }
 
