@@ -59,7 +59,6 @@ public class StartActivity extends AppCompatActivity implements LocationListener
         String cityNameSetting = userData.getString(USER_CITY, null);   // получаем название города если он сохранён, или null если нет
         if (cityNameSetting == null) {    // если null:
             startLocation();              // - определяем местоположение
-            //  showConfirmCityDialog();      // - показываем диалог с подтверждением
             initUI();                     // - показываем активность
         } else {
             startCalendarActivity();      // иначе - настройки сохранены - пропускаем это окно
@@ -81,10 +80,7 @@ public class StartActivity extends AppCompatActivity implements LocationListener
     }
 
     private void initUI() {
-//        toolbar = findViewById(R.id.toolbar);
-//        toolbar.setTitle(R.string.hair_time);
-//        setSupportActionBar(toolbar);
-
+        
         enterCityTextView = findViewById(R.id.autoCompleteTextView);
         nextButton = findViewById(R.id.confirmCityAndNameButton);
         userNameEditText = findViewById(R.id.enterNameEditText);
@@ -134,14 +130,6 @@ public class StartActivity extends AppCompatActivity implements LocationListener
                         }
                     }
                 }
-                //  if (isGPSEnabled) {
-                //     if (locationManager != null) {
-                //          currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                //         if (currentLocation != null) {
-                //             userLocation = getApplicationState(currentLocation);
-                //          }
-                //     }
-                //  }
             }
         }
 
@@ -180,19 +168,19 @@ public class StartActivity extends AppCompatActivity implements LocationListener
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        boolean persmissionsGranted = false;
+        boolean permissionsGranted = false;
         if (requestCode == 100) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (grantResults.length > 1 && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    persmissionsGranted = true;
+                    permissionsGranted = true;
                 } else {
-                    persmissionsGranted = false;
+                    permissionsGranted = false;
                 }
             } else {
-                persmissionsGranted = false;
+                permissionsGranted = false;
             }
         }
-        if (persmissionsGranted) {
+        if (permissionsGranted) {
             recreate();
         }
     }
